@@ -14,8 +14,10 @@ from flask_migrate import Migrate
 
 app = Flask(__name__)
 jwt = JWTManager(app)
-CORS(app)
-socketio = SocketIO(app, cors_allowed_origins=CLIENT_URL)
+# CORS(app)
+# socketio = SocketIO(app, cors_allowed_origins=CLIENT_URL)
+CORS(app, resources={r"/*": {"origins": "*"}})
+socketio = SocketIO(app, cors_allowed_origins="*")
 scheduler = BackgroundScheduler()
 weekly_scheduler = BackgroundScheduler()
 
