@@ -27,7 +27,7 @@ w3 = Web3(Web3.HTTPProvider(bsc_rpc_url))
 bcrypt = Bcrypt()
 
 app.config.from_pyfile('config.py')
-db.init_app(app)
+# db.init_app(app)
 migrate = Migrate(app, db)
 
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=12)
@@ -84,5 +84,5 @@ scheduler.add_job(check_and_cleanup_tables, 'interval', minutes=1)
 scheduler.start()
 weekly_scheduler.start()
 
-with app.app_context():
-    db.create_all()
+# with app.app_context():
+#     db.create_all()

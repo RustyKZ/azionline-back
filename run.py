@@ -1,10 +1,21 @@
 from app import app, socketio
 from app.gaming import *
 
+# if __name__ == '__main__':
+#     socketio.run(app, host='0.0.0.0', port=8000)
+
 if __name__ == '__main__':
-    # app.run(host="0.0.0.0", port=8000)
-    # socketio.run(app, port=8000, allow_unsafe_werkzeug = True)
-    app.run(debug=True, port=8000)
+    app.run()
+
+# if __name__ == '__main__':
+#     socketio.run(app, host='0.0.0.0', port=8000, debug=True, allow_unsafe_werkzeug=True)
+
+
+
+# from app import app
+#
+# if __name__ == '__main__':
+#     app.run(debug=True, port=8000)
 
 # if __name__ == '__main__':
 #     with app.app_context():
