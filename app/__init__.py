@@ -27,8 +27,8 @@ w3 = Web3(Web3.HTTPProvider(bsc_rpc_url))
 bcrypt = Bcrypt()
 
 app.config.from_pyfile('config.py')
-# db.init_app(app)
-migrate = Migrate(app, db)
+db.init_app(app)
+# migrate = Migrate(app, db)
 
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=12)
 app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=30)
