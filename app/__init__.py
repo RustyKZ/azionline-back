@@ -14,10 +14,14 @@ from flask_migrate import Migrate
 
 app = Flask(__name__)
 jwt = JWTManager(app)
-# CORS(app)
+CORS(app)
 # socketio = SocketIO(app, cors_allowed_origins=CLIENT_URL)
-CORS(app, resources={r"/*": {"origins": "*"}})
-socketio = SocketIO(app, cors_allowed_origins="*")
+CORS(app, resources={r"/*": {"origins": ["http://azi-online.com", "https://azi-online.com"]}})
+# CORS(app, resources={r"/*": {"origins": "*"}})
+socketio = SocketIO(app, cors_allowed_origins=["http://azi-online.com", "https://azi-online.com"])
+# socketio = SocketIO(app, cors_allowed_origins="*")
+
+# socketio = SocketIO(app)
 scheduler = BackgroundScheduler()
 weekly_scheduler = BackgroundScheduler()
 
