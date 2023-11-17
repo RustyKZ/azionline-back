@@ -7,7 +7,7 @@ from flask_jwt_extended import JWTManager, create_access_token, jwt_required, ge
 from datetime import timedelta
 from web3 import Web3
 from flask_socketio import SocketIO
-from app.config import CLIENT_URL
+# from app.config import CLIENT_URL
 from apscheduler.schedulers.background import BackgroundScheduler
 import time
 from flask_migrate import Migrate
@@ -16,9 +16,9 @@ app = Flask(__name__)
 jwt = JWTManager(app)
 CORS(app)
 # socketio = SocketIO(app, cors_allowed_origins=CLIENT_URL)
-CORS(app, resources={r"/*": {"origins": ["http://azi-online.com", "https://azi-online.com"]}})
+CORS(app, resources={r"/*": {"origins": ["http://azi-online.com", "https://azi-online.com", "http://127.0.0.1", "https://127.0.0.1"]}})
 # CORS(app, resources={r"/*": {"origins": "*"}})
-socketio = SocketIO(app, cors_allowed_origins=["http://azi-online.com", "https://azi-online.com"])
+socketio = SocketIO(app, cors_allowed_origins=["http://azi-online.com", "https://azi-online.com", "http://127.0.0.1", "htts://127.0.0.1"])
 # socketio = SocketIO(app, cors_allowed_origins="*")
 
 # socketio = SocketIO(app)
