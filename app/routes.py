@@ -6,7 +6,7 @@ from app.users import *
 from sqlalchemy import desc
 from app.gaming import *
 from math import floor
-# from app.config import CLIENT_URL
+from app.config import CLIENT_URL
 from eth_account.messages import defunct_hash_message
 import traceback
 
