@@ -13,7 +13,6 @@ import time
 from flask_migrate import Migrate
 
 app = Flask(__name__)
-print('App = Flask')
 jwt = JWTManager(app)
 CORS(app)
 # socketio = SocketIO(app, cors_allowed_origins=CLIENT_URL)
@@ -44,8 +43,8 @@ app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=30)
 access_token_expires = app.config.get('JWT_ACCESS_TOKEN_EXPIRES')
 refresh_token_expires = app.config.get('JWT_REFRESH_TOKEN_EXPIRES')
 
-print(f"Срок действия токена: {access_token_expires}")
-print(f"Время неактивности токена: {refresh_token_expires}")
+# print(f"Срок действия токена: {access_token_expires}")
+# print(f"Время неактивности токена: {refresh_token_expires}")
 
 from app import routes
 
@@ -67,7 +66,7 @@ def check_and_cleanup_tables():
 def weekly_airdrop():
     print('Weekly scheduler is running...')
     current_day = datetime.utcnow().weekday()  # 0 is Monday, 6 is Sunday
-    if current_day != 0:  # Check if today is Monday
+    if current_day != 2:  # Check if today is Wednesday
         return
     with app.app_context():
         try:
@@ -83,13 +82,11 @@ def weekly_airdrop():
             new_airdrop = Weekly(total_freecoin=total_airdrop)
             db.session.add(new_airdrop)
             db.session.commit()
+            print('Airdrop complete. Total airdrop is ', total_airdrop)
         except:
             return print('Weekly airdrop error')
 
-# scheduler.add_job(check_and_cleanup_tables, 'interval', minutes=1)
-# scheduler.start()
-# weekly_scheduler.add_job(weekly_airdrop, 'interval', hours=1)
-# weekly_scheduler.start()
-
-# with app.app_context():
-#     db.create_all()
+weekly_scheduler.add_job(weekly_airdrop, 'interval', hours=1)
+scheduler.add_job(check_and_cleanup_tables, 'interval', minutes=1)
+scheduler.start()
+weekly_scheduler.start()
