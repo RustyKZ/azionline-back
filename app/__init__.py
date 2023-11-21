@@ -13,6 +13,7 @@ import time
 from flask_migrate import Migrate
 
 app = Flask(__name__)
+print('App = Flask')
 jwt = JWTManager(app)
 CORS(app)
 # socketio = SocketIO(app, cors_allowed_origins=CLIENT_URL)
@@ -64,31 +65,31 @@ def check_and_cleanup_tables():
             print(f"An error occurred: {e}")
 
 def weekly_airdrop():
+    print('Weekly scheduler is running...')
     current_day = datetime.utcnow().weekday()  # 0 is Monday, 6 is Sunday
     if current_day != 0:  # Check if today is Monday
         return
-    last_airdrop = Weekly.query.order_by(Weekly.date.desc()).first()
-    if last_airdrop and (datetime.utcnow() - last_airdrop.date).days < 6:
-        return  # Airdrop already conducted within the last 6 days
-    # Your airdrop mechanism goes here
-    try:
-        total_airdrop = 0
-        users = Players.query.all()
-        for user in users:
-            user.freecoin += 1000
-            user.airdopfree += 1000
-            total_airdrop =+ 1000
-        # Create a new record in the Weekly table
-        new_airdrop = Weekly(total_freecoin = total_airdrop)
-        db.session.add(new_airdrop)
-        db.session.commit()
-    except:
-        return
+    with app.app_context():
+        try:
+            last_airdrop = Weekly.query.order_by(Weekly.date.desc()).first()
+            if last_airdrop and (datetime.utcnow() - last_airdrop.date).days < 6:
+                return print('This week airdrop already done')# Airdrop already conducted within the last 6 days
+            total_airdrop = 0
+            users = Players.query.all()
+            for user in users:
+                user.freecoin += 1000
+                user.airdopfree += 1000
+                total_airdrop =+ 1000
+            new_airdrop = Weekly(total_freecoin=total_airdrop)
+            db.session.add(new_airdrop)
+            db.session.commit()
+        except:
+            return print('Weekly airdrop error')
 
-weekly_scheduler.add_job(weekly_airdrop, 'interval', hours=1)
-scheduler.add_job(check_and_cleanup_tables, 'interval', minutes=1)
-scheduler.start()
-weekly_scheduler.start()
+# scheduler.add_job(check_and_cleanup_tables, 'interval', minutes=1)
+# scheduler.start()
+# weekly_scheduler.add_job(weekly_airdrop, 'interval', hours=1)
+# weekly_scheduler.start()
 
 # with app.app_context():
 #     db.create_all()
