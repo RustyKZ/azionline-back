@@ -77,8 +77,8 @@ def weekly_airdrop():
             users = Players.query.all()
             for user in users:
                 user.freecoin += 1000
-                user.airdopfree += 1000
-                total_airdrop =+ 1000
+                user.airdropfree += 1000
+                total_airdrop += 1000
             new_airdrop = Weekly(total_freecoin=total_airdrop)
             db.session.add(new_airdrop)
             db.session.commit()
