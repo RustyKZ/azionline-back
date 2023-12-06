@@ -5,7 +5,7 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, '..', 'db', 'app.
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # CLIENT_URL = 'https://localhost:8080'
-SECRET_KEY = 'your_secret_key_here#KFDJLKJW#jkflejfjekl##KJKLJ$'
+SECRET_KEY = 'your_secret_key'
 
 
 
